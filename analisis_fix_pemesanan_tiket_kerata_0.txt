@@ -1,0 +1,425 @@
+===============================================================
+ANALISIS KESESUAIAN KODE FIX_PEMESANAN_TIKET_KERATA.CPP 
+DENGAN FORMAT TUGAS BESAR
+===============================================================
+
+File yang dianalisis: fix_pemesanan_tiket_kerata.cpp
+Tanggal analisis: 17 Juni 2025
+Format referensi: FORMAT_TUGAS_BESAR_ALPRO.md
+
+===============================================================
+RINGKASAN EKSEKUTIF
+===============================================================
+
+Program fix_pemesanan_tiket_kerata.cpp merupakan sistem reservasi tiket
+kereta api yang menggunakan paradigma Object-Oriented Programming (OOP)
+dengan class. Setelah dianalisis terhadap standar FORMAT_TUGAS_BESAR_ALPRO.md,
+program ini menunjukkan ketidaksesuaian yang sangat signifikan dengan
+persyaratan yang ditetapkan.
+
+SKOR KESESUAIAN: 15/100
+STATUS: SANGAT TIDAK MEMENUHI STANDAR
+
+===============================================================
+1. ANALISIS HEADER DAN LIBRARY
+===============================================================
+
+YANG DITEMUKAN:
+- #include <iostream> ✓ (sesuai)
+- #include <string> ✓ (sesuai) 
+- #include <vector> ❌ (DILARANG - STL Container)
+- #include <iomanip> ✓ (sesuai)
+- #include <ctime> ✓ (sesuai)
+- #include <sstream> ⚠️ (tidak ada dalam daftar wajib)
+
+YANG SEHARUSNYA ADA TAPI TIDAK ADA:
+- #include <fstream> ❌ (WAJIB untuk file I/O)
+- #include <limits> ❌ (WAJIB untuk error handling)
+- #include <dirent.h> ❌ (opsional)
+- #include <sys/stat.h> ❌ (opsional)
+
+PENILAIAN: TIDAK SESUAI
+MASALAH KRITIS: Menggunakan vector yang dilarang, missing library
+wajib untuk file I/O dan error handling.
+
+===============================================================
+2. ANALISIS KONSTANTA GLOBAL
+===============================================================
+
+YANG DITEMUKAN:
+- Tidak ada konstanta global yang didefinisikan
+
+YANG SEHARUSNYA ADA:
+- const int MAX_DATA = 100;
+- const int MAX_PELANGGARAN = 10; (atau equivalent)
+- const int MAX_USERS = 20;
+
+PENILAIAN: TIDAK SESUAI
+DAMPAK: Tidak ada kontrol terhadap batas maksimal data yang dapat
+disimpan, berpotensi menyebabkan memory issues.
+
+===============================================================
+3. ANALISIS STRUKTUR DATA
+===============================================================
+
+YANG DITEMUKAN:
+- Menggunakan CLASS instead of STRUCT (TIDAK SESUAI FORMAT)
+- Struct Stasiun, TipeKereta, JadwalKereta, Tarif, DataPenumpang
+- Semua data disimpan dalam vector (DILARANG)
+
+EVALUASI TERHADAP PERSYARATAN:
+- Format mengharuskan minimal 3 struct ✓ (ada 5 struct)
+- MASALAH: Tidak ada struct User untuk autentikasi ❌
+- MASALAH: Menggunakan class-based approach (tidak sesuai format) ❌
+- MASALAH: Semua data menggunakan vector (dilarang) ❌
+
+PENILAIAN: TIDAK SESUAI
+MASALAH FUNDAMENTAL: Paradigma OOP tidak sesuai dengan format
+yang mengharuskan pendekatan procedural dengan struct dan array.
+
+===============================================================
+4. ANALISIS ARRAY GLOBAL
+===============================================================
+
+YANG DITEMUKAN:
+- Semua data disimpan dalam vector sebagai member class
+- Tidak ada array global yang didefinisikan
+
+YANG SEHARUSNYA ADA:
+- Array statis untuk data utama
+- Array untuk user management  
+- Array 2D untuk data master/referensi
+
+PENILAIAN: TIDAK SESUAI
+MASALAH: Menggunakan STL container (vector) yang dilarang,
+tidak menggunakan array statis global.
+
+===============================================================
+5. ANALISIS SISTEM AUTENTIKASI
+===============================================================
+
+YANG DITEMUKAN:
+- Tidak ada sistem login sama sekali
+- Tidak ada validasi user
+- Tidak ada manajemen user
+- Tidak ada struct User
+
+YANG SEHARUSNYA ADA:
+- Login system dengan username/password
+- Maksimal 3 percobaan login
+- File handling untuk user data
+- Minimal 3 user default
+
+PENILAIAN: TIDAK ADA
+DAMPAK KRITIK: Program tidak memiliki keamanan dan kontrol akses,
+tidak memenuhi persyaratan fundamental sistem manajemen data.
+
+===============================================================
+6. ANALISIS OPERASI CRUD
+===============================================================
+
+CREATE: ❌ TIDAK ADA
+- Tidak ada fungsi tambah data yang persistent
+- Data hanya di-inisialisasi dalam constructor
+
+READ: ⚠️ SEBAGIAN ADA  
+- Ada tampilan data untuk selection
+- KURANG: Tidak ada tampilkan semua data dalam format tabel
+- KURANG: Tidak menggunakan setw() untuk formatting
+
+UPDATE: ❌ TIDAK ADA
+- Tidak ada fungsi edit data
+- Tidak ada kemampuan modifikasi data
+
+DELETE: ❌ TIDAK ADA
+- Tidak ada fungsi hapus data
+- Tidak ada konfirmasi penghapusan
+
+PENILAIAN: SANGAT TIDAK SESUAI (10%)
+MASALAH: Program tidak mengimplementasikan operasi CRUD yang
+merupakan persyaratan fundamental.
+
+===============================================================
+7. ANALISIS VALIDASI INPUT
+===============================================================
+
+YANG DITEMUKAN:
+- Validasi basic untuk pilihan menu (range checking)
+- Tidak ada validasi khusus untuk data input
+
+YANG SEHARUSNYA ADA:
+- validasiNama() untuk nama
+- validasiKTP() untuk nomor identitas  
+- validasiPlat() untuk plat nomor (atau equivalent)
+- validasiAlamat() untuk alamat
+
+PENILAIAN: TIDAK SESUAI
+VALIDASI SANGAT MINIMAL dan tidak ada fungsi validasi khusus
+sesuai standar yang diminta.
+
+===============================================================
+8. ANALISIS FILE INPUT/OUTPUT
+===============================================================
+
+YANG DITEMUKAN:
+- Tidak ada file I/O sama sekali
+- Data hanya ada dalam memory saat runtime
+
+YANG SEHARUSNYA ADA:
+- Load/save data ke format CSV
+- Load/save user ke format TXT
+- Auto-save setiap perubahan
+- Auto-load saat startup
+
+PENILAIAN: TIDAK ADA
+DAMPAK KRITIK: Data tidak persistent, hilang saat program
+ditutup. Ini adalah kekurangan fundamental yang sangat serius.
+
+===============================================================
+9. ANALISIS DASHBOARD DAN STATISTIK
+===============================================================
+
+YANG DITEMUKAN:
+- Tidak ada dashboard
+- Tidak ada statistik
+- Tidak ada reporting system
+
+YANG SEHARUSNYA ADA:
+- Statistik umum (total data, pendapatan, rata-rata)
+- Ranking/data terbanyak
+- Data dengan nilai tertinggi
+- Submenu khusus untuk statistik
+
+PENILAIAN: TIDAK ADA
+Program fokus pada reservasi tapi tidak memiliki fitur
+analitik yang dipersyaratkan.
+
+===============================================================
+10. ANALISIS FITUR TAMBAHAN
+===============================================================
+
+YANG DITEMUKAN:
+- Format tampilan tiket yang menarik ✓
+- Penggunaan ctime untuk timestamp ✓
+- Simulasi proses pembayaran ✓
+
+YANG SEHARUSNYA ADA:
+- Format currency (rupiah dengan titik pemisah) ❌
+- Auto-generate date dari sistem ⚠️ (ada tapi tidak persistent)
+- Print to file untuk nota ❌
+- Clear screen untuk UI yang bersih ❌
+- Error handling komprehensif ❌
+
+PENILAIAN: SEBAGIAN SESUAI (30%)
+Ada beberapa fitur menarik tapi tidak sesuai dengan yang
+dipersyaratkan dalam format.
+
+===============================================================
+11. ANALISIS STRUKTUR MENU
+===============================================================
+
+YANG DITEMUKAN:
+- Program berjalan dalam satu flow linear
+- Tidak ada menu utama dengan pilihan CRUD
+- Interface berbasis wizard/step-by-step
+
+YANG SEHARUSNYA ADA:
+Menu utama dengan 7 opsi:
+1. Tambah Data (CREATE)
+2. Tampilkan Data (READ)
+3. Update Data (UPDATE)
+4. Hapus Data (DELETE)
+5. Dashboard & Statistik
+6. Cetak Nota
+7. Keluar
+
+PENILAIAN: TIDAK SESUAI
+Struktur program tidak mengikuti pola menu-driven yang
+dipersyaratkan.
+
+===============================================================
+12. ANALISIS ALGORITMA
+===============================================================
+
+YANG DITEMUKAN:
+- Sequential search dalam vector untuk pencarian data ⚠️
+- Basic string processing ✓
+- Tidak ada sorting algorithm ❌
+
+YANG SEHARUSNYA ADA:
+- Sequential Search berdasarkan ID
+- Simple Sorting untuk ranking
+- Array Manipulation untuk insert/delete/update
+- String Processing untuk validasi
+- File Processing untuk CSV parsing
+
+PENILAIAN: TIDAK SESUAI (25%)
+Algoritma yang digunakan tidak sesuai dengan yang
+dipersyaratkan.
+
+===============================================================
+13. ANALISIS ERROR HANDLING
+===============================================================
+
+YANG DITEMUKAN:
+- Basic range checking untuk input menu
+- Tidak ada exception handling
+- Tidak ada boundary checking yang proper
+
+YANG SEHARUSNYA ADA:
+- Input validation untuk semua user input
+- Exception handling untuk operasi file
+- Boundary checking untuk array
+- Type checking untuk input numerik
+
+PENILAIAN: TIDAK SESUAI
+Error handling sangat minimal dan tidak memenuhi standar.
+
+===============================================================
+14. ANALISIS KETENTUAN KHUSUS
+===============================================================
+
+BAHASA PEMROGRAMAN:
+✓ Menggunakan C++ (SESUAI)
+
+LIBRARY:
+❌ Menggunakan vector (STL Container - DILARANG)
+❌ Missing library wajib (fstream, limits)
+
+STRUKTUR DATA:
+❌ Menggunakan class-based OOP (tidak sesuai format)
+❌ Menggunakan vector instead of array statis
+❌ Tidak ada array global
+
+PARADIGMA:
+❌ Menggunakan OOP (Object-Oriented Programming)
+❌ Format mengharuskan procedural programming
+
+PENILAIAN: SANGAT TIDAK SESUAI
+Program menggunakan paradigma yang completely different
+dari yang dipersyaratkan.
+
+===============================================================
+15. ANALISIS FUNGSIONALITAS PROGRAM
+===============================================================
+
+APA YANG PROGRAM INI LAKUKAN:
+- Sistem reservasi tiket kereta api
+- Input data penumpang
+- Pemilihan stasiun, tipe kereta, jadwal
+- Kalkulasi tarif otomatis
+- Pemilihan kursi
+- Simulasi pembayaran
+- Cetak tiket
+
+KELEBIHAN PROGRAM:
+- User interface yang user-friendly
+- Flow yang logical dan intuitif
+- Simulasi yang realistis
+- Output tiket yang menarik
+- Data comprehensive (stasiun, tarif, jadwal)
+
+KEKURANGAN FUNDAMENTAL:
+- Tidak persistent (data hilang setelah program selesai)
+- Tidak ada CRUD operations
+- Tidak ada sistem autentikasi
+- Tidak menggunakan file I/O
+- Paradigma OOP vs procedural yang diminta
+
+===============================================================
+PERBANDINGAN DENGAN FORMAT YANG DIMINTA
+===============================================================
+
+FORMAT MEMINTA: Sistem Manajemen Data dengan Operasi CRUD
+PROGRAM INI: Sistem Reservasi Tiket (Transaction-based)
+
+FORMAT MEMINTA: Procedural Programming dengan struct dan array
+PROGRAM INI: Object-Oriented Programming dengan class dan vector
+
+FORMAT MEMINTA: Data persistence dengan file I/O
+PROGRAM INI: Data temporary dalam memory
+
+FORMAT MEMINTA: Menu-driven interface dengan 7 opsi
+PROGRAM INI: Wizard-based interface linear
+
+FORMAT MEMINTA: Sistem dengan autentikasi dan user management
+PROGRAM INI: Direct access tanpa autentikasi
+
+===============================================================
+REKOMENDASI PERBAIKAN
+===============================================================
+
+REFACTORING TOTAL DIPERLUKAN (8-10 minggu):
+
+PRIORITAS KRITIS:
+1. Ganti paradigma OOP ke procedural programming
+2. Hapus semua class, ganti dengan functions
+3. Ganti semua vector dengan array statis
+4. Implementasi struct sesuai format (minimal 3 struct)
+5. Implementasi sistem autentikasi lengkap
+6. Implementasi file I/O untuk CSV dan TXT
+7. Implementasi operasi CRUD lengkap
+8. Ganti interface ke menu-driven system
+
+PRIORITAS TINGGI:
+9. Implementasi konstanta global
+10. Implementasi validasi input yang proper
+11. Implementasi dashboard dan statistik
+12. Implementasi error handling komprehensif
+
+PRIORITAS MENENGAH:
+13. Implementasi algoritma sorting dan searching
+14. Implementasi fitur tambahan (format rupiah, clear screen)
+15. Implementasi print to file
+
+CATATAN PENTING:
+Program ini pada dasarnya perlu ditulis ulang completely
+karena perbedaan paradigma yang fundamental.
+
+===============================================================
+ESTIMASI EFFORT PERBAIKAN
+===============================================================
+
+COMPLETE REWRITE (8-10 minggu):
+- Redesign architecture dari OOP ke procedural
+- Implementasi data structures baru dengan array
+- Implementasi semua fitur wajib dari awal
+
+ALTERNATIVE APPROACH (4-6 minggu):
+- Ekstrak logic bisnis yang sudah ada
+- Reimplement dalam paradigma procedural
+- Integrate dengan fitur-fitur yang missing
+
+TIDAK DISARANKAN:
+- Mencoba modify program existing karena perbedaan
+  paradigma yang terlalu fundamental
+
+===============================================================
+KESIMPULAN
+===============================================================
+
+Program fix_pemesanan_tiket_kerata.cpp adalah program yang
+SANGAT BAIK dari segi fungsionalitas dan user experience untuk
+sistem reservasi tiket. Namun, program ini COMPLETELY INCOMPATIBLE
+dengan format tugas besar yang diminta karena:
+
+1. Menggunakan paradigma OOP vs procedural yang diminta
+2. Menggunakan STL containers yang dilarang
+3. Tidak mengimplementasikan fitur-fitur wajib (CRUD, autentikasi)
+4. Tidak ada data persistence
+5. Struktur program yang completely different
+
+SKOR FINAL: 15/100
+
+REKOMENDASI AKHIR:
+TIDAK LAYAK SUBMIT untuk tugas besar ini. Program perlu
+COMPLETE REWRITE dengan paradigma yang berbeda. Namun,
+logic bisnis dan flow program bisa dijadikan referensi
+untuk implementasi ulang.
+
+CATATAN POSITIF:
+Meskipun tidak sesuai format, program ini menunjukkan
+pemahaman programming yang baik dan bisa menjadi foundation
+untuk implementasi yang sesuai standar.
+
+===============================================================
